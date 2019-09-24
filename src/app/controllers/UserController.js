@@ -21,7 +21,30 @@ class UserController {
   }
 
   async update(req, res) {
-    return res.json({ message: 'ok' });
+    const { email, oldPassword } = req.body;
+
+    const user = await User.findByPk(req.userId);
+    if (email !== user.email) {
+      const userExists = await User.findOne({ where: { email } });
+
+      if (userExists) {
+        return res.status(400).json({ error: 'Users already exists' });
+      }
+    }
+
+    // Dupla condição, ou seja, só irá trocar a senha se a antiga foi informada
+    if (oldPassword && !(await user.checkPassword(oldPassword))) {
+      return res.status(401).json({ message: 'Password does not match' });
+    }
+
+    const { id, nome, provider } = await user.update(req.body);
+
+    return res.json({
+      id,
+      nome,
+      email,
+      provider,
+    });
   }
 }
 

@@ -8,9 +8,20 @@ class UserController {
       return res.status(400).json({ error: 'Users already exists' });
     }
 
+    // Vai retornar somente esses dados para o nosso fron-end
     const { id, nome, email, provider } = await User.create(req.body);
 
-    return res.json({ id, nome, email, provider });
+    // Então vai mostrar somente isso no front-end
+    return res.json({
+      id,
+      nome,
+      email,
+      provider,
+    });
+  }
+
+  async update(req, res) {
+    return res.json({ message: 'ok' });
   }
 }
 

@@ -23,13 +23,17 @@ class User extends Model {
     this.addHook('beforeSave', async user => {
       // só qnd estiver criando ou editando um novo user
       if (user.password) {
-        // vai criptografar o password do usuário, e o 8 é o num da força da cryptgrafia
+        // criptografa o password do user, 8 é o num da força da cryptgrafia
         user.password_hash = await bcrypt.hash(user.password, 8);
-
-        // Sempre vai retornar o model que acabou de ser inicializado
-        return this;
       }
     });
+
+    // Sempre vai retornar o model que acabou de ser inicializado
+    return this;
+  }
+
+  checkPassword(password) {
+    return bcrypt.compare(password, this.password_hash);
   }
 }
 

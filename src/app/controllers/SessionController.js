@@ -6,7 +6,6 @@ import User from '../models/User';
 
 class SessionController {
   async store(req, res) {
-    console.log(req.body.rs);
     const schema = Yup.object().shape({
       email: Yup.string()
         .email()

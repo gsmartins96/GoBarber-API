@@ -26,7 +26,7 @@ class SessionController {
 
     // utilza o await pois está usando o bcrypt
     if (!(await user.checkPassword(password))) {
-      return res.status(401).json({ error: 'Password does not correct' });
+      return res.status(401).json({ error: 'Password does not match' });
     }
 
     const { id, nome } = user;

@@ -58,13 +58,16 @@ class AppointmentController {
         .json({ error: 'You can only create appointments with providers' });
     }
 
+    // Hora em que será feita os agendamentos
     const hourStart = startOfHour(parseISO(date));
     if (isBefore(hourStart, new Date())) {
       return res.status(400).json({ error: 'Past dates are not permited' });
     }
 
+    // Checa se um horario com um provider (escolhido pelo usuario) estar disponível
     const checkAvailability = await Appointment.findOne({
       where: {
+        // provider_id no qual o usuario esta querendo fazer um agendamento
         provider_id,
         canceled_at: null,
         date: hourStart,

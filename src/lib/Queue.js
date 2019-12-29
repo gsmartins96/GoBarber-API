@@ -1,6 +1,6 @@
 import Bee from 'bee-queue';
 import CancellationMail from '../app/jobs/CancellationMail';
-import redisConfig from '../config/regis';
+import redisConfig from '../config/redis';
 
 // Assim como no load de Models:
 // Sempre que tivermos um novo JOB, iremos coloca-lo nesse vetor:

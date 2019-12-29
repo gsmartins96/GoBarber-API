@@ -1,11 +1,11 @@
 export default {
   // Protoco SMTP, de envio de e-mail
-  host: 'smtp.mailtrap.io',
-  port: '2525',
+  host: process.env.MAIL_HOST,
+  port: process.env.MAIL_PORT,
   secure: false,
   auth: {
-    user: 'c31c0b347ae7ff',
-    pass: '2c31b48b73d49f',
+    user: process.env.MAIL_USER,
+    pass: process.env.MAIL_PASS,
   },
   // Configurações padrões do envio de e-mail
   default: {

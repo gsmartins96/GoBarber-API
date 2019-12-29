@@ -1,4 +1,7 @@
+import { resolve } from 'path';
 import nodemailer from 'nodemailer';
+import nodemailehbs from 'nodemailer-express-handlebars';
+import exphbs from 'express-handlebars';
 import mailConfig from '../config/mail';
 
 class Mail {
@@ -12,6 +15,25 @@ class Mail {
       // Na hora de passar o usuário, verificar se tem um usuário, se não passa um usuário nulo
       auth: auth.user ? auth : null,
     });
+  }
+
+  configureTemplates() {
+    const viewPath = resolve(__dirname, '..', 'app', 'views', 'emails');
+
+    // configurar o compilador do
+    this.transporter.use(
+      'compile', // Compile: Como formata/compila nossos e-mails.
+      nodemailehbs({
+        viewEngine: exphbs.create({
+          layoutsDir: resolve(viewPath, 'layouts'),
+          partialsDir: resolve(viewPath, 'partials'),
+          defaultLayout: 'default',
+          extname: '.hbs',
+        }),
+        viewPath,
+        extName: '.hbs',
+      })
+    );
   }
 
   // Metodo para enviar o e-mail

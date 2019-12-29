@@ -5,6 +5,8 @@ import Appointment from '../models/Appointment';
 import User from '../models/User';
 
 class ScheduleController {
+  // Lista todos os agendamentos que o Provider tem em um dia, bem como verifica se o usuário logado
+  // é um provider
   async index(req, res) {
     const checkUserProvider = await User.findOne({
       where: { id: req.userId, provider: true },

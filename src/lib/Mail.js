@@ -15,6 +15,8 @@ class Mail {
       // Na hora de passar o usuário, verificar se tem um usuário, se não passa um usuário nulo
       auth: auth.user ? auth : null,
     });
+
+    this.configureTemplates();
   }
 
   configureTemplates() {

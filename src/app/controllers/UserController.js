@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import User from '../models/User';
+import File from '../models/File';
 
 class UserController {
   // Vai receber os dados
@@ -70,13 +71,23 @@ class UserController {
       return res.status(401).json({ message: 'Password does not match' });
     }
 
-    const { id, nome, provider } = await user.update(req.body);
+    await user.update(req.body);
+
+    const { id, nome, avatar } = await User.findByPk(req.userId, {
+      include: [
+        {
+          model: File,
+          as: 'avatar',
+          attributes: ['id', 'path', 'url'],
+        },
+      ],
+    });
 
     return res.json({
       id,
       nome,
       email,
-      provider,
+      avatar,
     });
   }
 }
